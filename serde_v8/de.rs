@@ -127,7 +127,9 @@ impl<'de> de::Deserializer<'de> for &'_ mut Deserializer<'_, '_, '_> {
           self.deserialize_f64(visitor)
         }
       }
-      ValueType::BigInt => Err(Error::UnsupportedType),
+      ValueType::BigInt => {
+        self.deserialize_i64(visitor)
+      },
       ValueType::String => self.deserialize_string(visitor),
       ValueType::Array => self.deserialize_seq(visitor),
       ValueType::Object => self.deserialize_map(visitor),
